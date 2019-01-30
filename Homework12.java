@@ -1,3 +1,5 @@
+// Michael Maddalon
+
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
@@ -11,14 +13,19 @@ public class Homework12 {
 	 * variables. The constructor should create and save an
 	 * ArrayList of RectangularShape values
 	 */
-	public Homework12() {
 
+
+
+	ArrayList<RectangularShape> aList;
+
+	public Homework12() {
+		aList = new ArrayList<RectangularShape>();
 	}
 
 	/* Adds the parameter s to the ArrayList
 	 */
 	public void addShape(RectangularShape s) {
-
+		aList.add(s);
 	}
 
 	/* Returns the number of RectangularShape objects
@@ -26,7 +33,13 @@ public class Homework12 {
 	 * parameter r
 	 */
 	public int problem1(Rectangle2D r) {
-
+		int total = 0;
+		for (int i = 0; i < aList.size(); i++) {
+			if (aList.get(i).intersects(r)) {
+				total++;
+			}
+		}
+		return total;
 	}
 
 	/* Returns the number of RectangularShape objects
@@ -34,21 +47,40 @@ public class Homework12 {
 	 * parameter p
 	 */
 	public int problem2(Point2D p) {
-
+		int total = 0;
+		for (int i = 0; i < aList.size(); i++) {
+			if (!aList.get(i).contains(p)) {
+				total++;
+			}
+		}
+		return total;
 	}
 
 	/* Returns the number of Ellipse2D objects that
 	 * are in the ArrayList
 	 */
 	public int problem3() {
-
+		int total = 0;
+		for (int i = 0; i < aList.size(); i++) {
+			if (aList.get(i) instanceof Ellipse2D) {
+				total++;
+			}
+		}
+		return total;
 	}
 
 	/* Returns true if any of the Rectangle2D objects
 	 * in the ArrayList intersects the parameter Line2D
 	 */
 	public boolean problem4(Line2D l) {
-
+		for (int i = 0; i < aList.size(); i++) {
+			if (aList.get(i) instanceof Rectangle2D) {
+				if (((Rectangle2D)(aList.get(i))).intersectsLine(l)) {
+				return true;
+				}
+			}
+		}
+		return false;
 	}
 
 	/* Return the total area of the RectangularShape objects in
@@ -60,7 +92,15 @@ public class Homework12 {
 	 * counts for both (i.e. do not account for intersection)
 	 */
 	public double problem5() {
-
+		double total = 0;
+		for (int i = 0; i < aList.size(); i++) {
+			if (aList.get(i) instanceof Rectangle2D) {
+				total += aList.get(i).getWidth() * aList.get(i).getHeight();
+			} else if (aList.get(i) instanceof Ellipse2D) {
+				total += Math.PI * aList.get(i).getWidth() * aList.get(i).getHeight() / 4;
+			}
+		}
+		return total;
 	}
 
 	public static void main(String[] args) {
